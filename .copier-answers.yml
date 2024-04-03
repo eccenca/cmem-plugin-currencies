@@ -1,0 +1,11 @@
+# Changes here will be overwritten by Copier
+_commit: v6.1.0
+_src_path: gh:eccenca/cmem-plugin-template
+author_mail: annika.bessing@eccenca.com
+author_name: Annika Bessing
+github_page: ''
+project_description: Create awesome Knowledge Graphs with eccenca Corporate Memory
+    :-)
+project_slug: currencies
+pypi: false
+
