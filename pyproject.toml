@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "cmem-plugin-currencies"
-version = "0.0.0"
+version = "0.0.1.dev1+ebd1b59.dirty"
 license = "Apache-2.0"
 description = "Create awesome Knowledge Graphs with eccenca Corporate Memory :-)"
 authors = ["Annika Bessing <annika.bessing@eccenca.com>"]
