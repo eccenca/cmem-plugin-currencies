@@ -1,5 +1,6 @@
 """currency converter plugin module"""
 import requests
+
 from collections.abc import Sequence
 
 from cmem_plugin_base.dataintegration.description import (
@@ -13,9 +14,10 @@ from cmem_plugin_base.dataintegration.plugins import TransformPlugin
     label="Currency Converter",
     description="Converts Currency"
                 " from one to another."
-                " Please use point as decimal separator and currency identifier as Currencies (e.g. EUR)",
+                " Please use point as decimal separator "
+                " and currency identifier as Currencies (e.g. EUR)",
     documentation="""
-This Converter allows you to convert currencies from one currency to another. 
+This Converter allows you to convert currencies from one currency to another.
 """,
     parameters=[
         PluginParameter(
@@ -39,11 +41,14 @@ class CurrenciesConverter(TransformPlugin):
         self.to_currency = to_currency
         self.from_currency = from_currency
 
-    def transform(self, amount: Sequence[float]) -> Sequence[float]:
+    def transform(self, amount: float) -> float:
         """Do the actual transformation of values"""
-        result = []
 
-        response = requests.get(
-            f"https://api.frankfurter.app/latest?amount={amount}&from_currency={self.from_currency}&to_currency={self.to_currency}")
-        result = response.json()['rates'][self.to_currency]
-        return result
+        base_url = "https://api.frankfurter.app/latest"
+        params = {"amount": amount, "from": self.from_currency, "to": self.to_currency}
+        response = requests.get(base_url, params=params)
+        data = response.json()
+        exchange_rate = data["rates"][self.to_currency]
+        converted_amount = amount*exchange_rate
+
+        return converted_amount
