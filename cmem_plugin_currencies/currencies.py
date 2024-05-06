@@ -41,7 +41,7 @@ class CurrenciesConverter(TransformPlugin):
         self.to_currency = to_currency
         self.from_currency = from_currency
 
-    def transform(self, amount: float) -> float:
+    def transform(self, amount: float):
         """Do the actual transformation of values"""
 
         base_url = "https://api.frankfurter.app/latest"
@@ -49,6 +49,24 @@ class CurrenciesConverter(TransformPlugin):
         response = requests.get(base_url, params=params)
         data = response.json()
         exchange_rate = data["rates"][self.to_currency]
-        converted_amount = amount*exchange_rate
-
+        converted_amount = amount*float(exchange_rate)
         return converted_amount
+
+    #print(converted_amount)
+
+
+"""
+Fehlermeldung: suche schon nach einer Lösung (Liste kann nicht multipliziert werden)
+Sample error report
+
+Details
+Error message: can't multiply sequence by non-int of type 'float'
+
+Input values:
+
+10.99
+Stacktrace:
+
+Exception class: com.eccenca.di.scripting.ScriptExecutionException
+
+"""
