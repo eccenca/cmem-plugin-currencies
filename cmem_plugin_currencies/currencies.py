@@ -23,13 +23,11 @@ This Converter allows you to convert currencies from one currency to another.
             name="to_currency",
             label="Target Currency",
             description="currency identifier (e.g. USD).",
-            default_value=None,
         ),
         PluginParameter(
             name="from_currency",
             label="Source Currency",
             description="currency identifier (e.g. EUR).",
-            default_value=None,
         ),
     ],
 )
