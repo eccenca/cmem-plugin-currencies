@@ -42,7 +42,7 @@ class CurrenciesConverter(TransformPlugin):
         """API access"""
         base_url = "https://api.frankfurter.app/latest"
         params = {"from": self.from_currency, "to": self.to_currency}
-        response = requests.get(base_url, params=params)
+        response = requests.get(base_url, params=params, timeout=10)
         data = response.json()
         self.exchange_rate = float(data["rates"][self.to_currency])
 

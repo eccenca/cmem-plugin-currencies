@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "cmem-plugin-currencies"
-version = "0.0.1.dev1+ebd1b59.dirty"
+version = "0.0.1.dev7+382f555.dirty"
 license = "Apache-2.0"
 description = "Create awesome Knowledge Graphs with eccenca Corporate Memory :-)"
 authors = ["Annika Bessing <annika.bessing@eccenca.com>"]
@@ -39,7 +39,7 @@ requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]
 build-backend = "poetry_dynamic_versioning.backend"
 
 [tool.poetry-dynamic-versioning]
-enable = true
+enable = false
 vcs = "git"
 dirty = true
 bump = true
