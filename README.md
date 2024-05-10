@@ -1,6 +1,6 @@
 # cmem-plugin-currencies
 
-Create awesome Knowledge Graphs with eccenca Corporate Memory :-)
+Convert prices between currencies.
 
 [![eccenca Corporate Memory](https://img.shields.io/badge/eccenca-Corporate%20Memory-orange)](https://documentation.eccenca.com)   
 

@@ -46,12 +46,6 @@ class CurrenciesConverter(TransformPlugin):
         data = response.json()
         self.exchange_rate = float(data["rates"][self.to_currency])
 
-    def transform(self, amounts: Sequence[float]) -> Sequence[float]:
+    def transform(self, inputs: Sequence[str]) -> Sequence[str]:
         """Do the actual transformation of values"""
-        converted_amounts = []
-
-        if len(amounts) != 0:
-            for amount in amounts:
-                converted_amounts = [f"{self.exchange_rate*float(_)}" for _ in amount]
-
-        return converted_amounts
+        return [str(self.exchange_rate * float(value)) for value in inputs]
