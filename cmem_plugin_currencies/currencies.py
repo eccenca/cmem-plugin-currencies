@@ -1,8 +1,7 @@
 """currency converter plugin module"""
-import requests
-
 from collections.abc import Sequence
 
+import requests
 from cmem_plugin_base.dataintegration.description import (
     Plugin,
     PluginParameter,
@@ -13,9 +12,9 @@ from cmem_plugin_base.dataintegration.plugins import TransformPlugin
 @Plugin(
     label="Currency Converter",
     description="Converts Currency"
-                " from one to another."
-                " Please use point as decimal separator "
-                " and currency identifier as Currencies (e.g. EUR)",
+    " from one to another."
+    " Please use point as decimal separator "
+    " and currency identifier as Currencies (e.g. EUR)",
     documentation="""
 This Converter allows you to convert currencies from one currency to another.
 """,
