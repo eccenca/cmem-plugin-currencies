@@ -1,5 +1,6 @@
 """currency converter plugin module"""
 from collections.abc import Sequence
+
 import requests
 from cmem_plugin_base.dataintegration.description import (
     Plugin,
@@ -42,17 +43,14 @@ class CurrenciesConverter(TransformPlugin):
 
         """Currency Check"""
         base_url = "https://api.frankfurter.app/"
-        response = requests.get(base_url+"currencies", timeout=10)
+        response = requests.get(base_url + "currencies", timeout=10)
 
         if to_currency.upper() in response.json() and from_currency.upper() in response.json():
             self.to_currency = to_currency.upper()
             self.from_currency = from_currency.upper()
 
             """API access, Historic or latest Rate"""
-            if len(historic) > 0:
-                url = base_url+historic
-            else:
-                url = base_url+"latest"
+            url = base_url + historic if len(historic) > 0 else base_url + "latest"
 
             params = {"from": self.from_currency, "to": self.to_currency}
             response = requests.get(url, params=params, timeout=10)
@@ -64,8 +62,4 @@ class CurrenciesConverter(TransformPlugin):
 
     def transform(self, inputs: Sequence[str]) -> Sequence[str]:
         """Do the actual transformation of values"""
-        if self.to_currency != "" and self.from_currency != "":
-            for value in inputs:
-                return [str(self.exchange_rate * float(_)) for _ in value]
-        else:
-            return "Currency not listed"
+        return [str(self.exchange_rate * float(_)) for _ in inputs]
