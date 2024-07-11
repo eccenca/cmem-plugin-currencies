@@ -1,7 +1,7 @@
 # Changes here will be overwritten by Copier
 _commit: v6.3.1
 _src_path: gh:eccenca/cmem-plugin-template
-author_mail: annika.bessing@eccenca.com
+author_mail: annikabessing@yahoo.de
 author_name: Annika Bessing
 github_page: ''
 project_description: Convert prices between currencies.

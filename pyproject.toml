@@ -1,9 +1,9 @@
 [tool.poetry]
 name = "cmem-plugin-currencies"
-version = "0.0.1.dev7+382f555.dirty"
+version = "0.0.0"
 license = "Apache-2.0"
 description = "Convert prices between currencies."
-authors = ["Annika Bessing <annika.bessing@eccenca.com>"]
+authors = ["Annika Bessing <annikabessing@yahoo.de>"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Environment :: Plugins",
