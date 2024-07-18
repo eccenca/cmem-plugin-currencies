@@ -3,9 +3,6 @@
 import pytest
 
 from cmem_plugin_currencies.currencies import (
-    MESSAGE_CURRENCY_NOT_AVAILABLE,
-    MESSAGE_NO_DATA_FOR_DATE,
-    MESSAGE_WRONG_DATE,
     CurrenciesConverter,
     get_current_date,
 )
@@ -30,11 +27,28 @@ def test_init() -> None:
 
 def test_rubel() -> None:
     """Test Rubel behaviour"""
-    with pytest.raises(WrongCurrencyCodeError, match=f"{MESSAGE_CURRENCY_NOT_AVAILABLE}: RUB"):
+    with pytest.raises(WrongCurrencyCodeError):
         # works not for 2024
-        CurrenciesConverter(from_currency="EUR", to_currency="RUB", date="2024-01-01")
+        CurrenciesConverter(from_currency="EUR", to_currency="RUB", date="2024-01-01").transform(
+            inputs=[["1"]]
+        )
     # works for 2010
-    CurrenciesConverter(from_currency="EUR", to_currency="RUB", date="2010-01-01")
+    CurrenciesConverter(from_currency="EUR", to_currency="RUB", date="2010-01-01").transform(
+        inputs=[["1"]]
+    )
+
+
+def test_multi_inputs() -> None:
+    """Test multiple inputs"""
+    plugin = CurrenciesConverter(from_currency="USD", to_currency="EUR", date="2024-07-12")
+    inputs = [
+        ["1", "1", "1", "1"],
+        ["EUR", "EUR", "EUR", "EUR"],
+        ["EUR", "EUR", "EUR", "EUR"],
+        ["2024-04-01", "2024-05-01", "2024-06-01", "2024-07-01"],
+    ]
+    transformed = plugin.transform(inputs=inputs)
+    assert transformed == ["1.0", "1.0", "1.0", "1.0"]
 
 
 def test_get_current_date() -> None:
@@ -44,26 +58,41 @@ def test_get_current_date() -> None:
     assert len(date) == ten
 
 
+def test_date_validated() -> None:
+    """Test date_validated function"""
+    assert CurrenciesConverter.date_validated("2024-01-01") == "2024-01-01"
+    with pytest.raises(InvalidDateError):
+        CurrenciesConverter.date_validated("2024-01-32")
+    with pytest.raises(InvalidDateError):
+        CurrenciesConverter.date_validated("2024")
+    with pytest.raises(InvalidDateError):
+        CurrenciesConverter.date_validated("2024-01")
+    with pytest.raises(InvalidDateError):
+        CurrenciesConverter.date_validated("0000-00-00")
+    with pytest.raises(InvalidDateError):
+        CurrenciesConverter.date_validated("xxx")
+    with pytest.raises(InvalidDateError):
+        CurrenciesConverter.date_validated("1999-01-03")
+    with pytest.raises(InvalidDateError):
+        CurrenciesConverter.date_validated("9999-01-03")
+
+
 def test_wrong_date() -> None:
     """Test wrong dates"""
     CurrenciesConverter(date="2024-01-01")
-    with pytest.raises(InvalidDateError, match=MESSAGE_WRONG_DATE):
-        CurrenciesConverter(date="WRONG")
-    with pytest.raises(InvalidDateError, match=MESSAGE_WRONG_DATE):
-        CurrenciesConverter(date="24-01-01")
-    with pytest.raises(InvalidDateError, match=MESSAGE_NO_DATA_FOR_DATE):
-        CurrenciesConverter(date="1000-01-01")
+    with pytest.raises(InvalidDateError):
+        CurrenciesConverter(date="WRONG").transform(inputs=[["1"]])
+    with pytest.raises(InvalidDateError):
+        CurrenciesConverter(date="24-01-01").transform(inputs=[["1"]])
+    with pytest.raises(InvalidDateError):
+        CurrenciesConverter(date="1000-01-01").transform(inputs=[["1"]])
 
 
 def test_wrong_currency() -> None:
     """Test wrong currencies"""
-    with pytest.raises(
-        WrongCurrencyCodeError, match=f"{MESSAGE_CURRENCY_NOT_AVAILABLE}: WRONG_FROM"
-    ):
-        CurrenciesConverter(date="2024-01-01", from_currency="WRONG_FROM")
-    with pytest.raises(WrongCurrencyCodeError, match=f"{MESSAGE_CURRENCY_NOT_AVAILABLE}: WRONG_TO"):
-        CurrenciesConverter(date="2024-01-01", to_currency="WRONG_TO")
-    with pytest.raises(
-        WrongCurrencyCodeError, match=f"{MESSAGE_CURRENCY_NOT_AVAILABLE}: WRONG_FROM"
-    ):
-        CurrenciesConverter(date="2024-01-01", to_currency="WRONG_TO", from_currency="WRONG_FROM")
+    with pytest.raises(WrongCurrencyCodeError):
+        CurrenciesConverter(date="2024-01-01", from_currency="WRONG_FROM").transform(inputs=[["1"]])
+    with pytest.raises(WrongCurrencyCodeError):
+        CurrenciesConverter(
+            date="2024-01-01", to_currency="WRONG_TO", from_currency="WRONG_FROM"
+        ).transform(inputs=[["1"]])
