@@ -118,9 +118,7 @@ class CurrenciesConverter(TransformPlugin):
             self.summary.historic_rate_miss_currency += 1
             self.summary.missing_currencies.add(currency)
             self.log.info(f"miss: historic rate no {currency} on {date}")
-            raise e.WrongCurrencyCodeError(
-                f"The exchange rate for {currency} ({date}) is not available."
-            )
+            raise e.WrongCurrencyCodeError(currency=currency, date=date)
         # we do not have the date
         self.summary.historic_rate_miss_date += 1
         self.log.info(f"miss: historic rate no data for {date} (try API now)")
@@ -135,9 +133,7 @@ class CurrenciesConverter(TransformPlugin):
         self.summary.api_rate_miss_currency += 1
         self.summary.missing_currencies.add(currency)
         self.log.info(f"miss: api rate for {currency} on {date}")
-        raise e.WrongCurrencyCodeError(
-            f"The exchange rate for {currency} ({date}) is not available."
-        )
+        raise e.WrongCurrencyCodeError(currency=currency, date=date)
 
     def transform_value(self, value: float, from_currency: str, to_currency: str, date: str) -> str:
         """Convert value from one currency to another"""
