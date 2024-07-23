@@ -19,3 +19,9 @@ tasks:
       ZIP_FILE: "{{.DIST_DIR}}/eurofxref-hist.zip"
       CSV_FILE: "eurofxref-hist.csv"
 
+  project:import:
+    desc: Import the test project.
+    cmds:
+      - cmemc project import --overwrite {{.PROJECT_ZIP}}
+    vars:
+      PROJECT_ZIP: "tests/fixtures/cmem-plugin-currencies.project.zip"
