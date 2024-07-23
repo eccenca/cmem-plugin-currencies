@@ -1,0 +1,21 @@
+# https://taskfile.dev
+---
+version: '3'
+
+tasks:
+
+  eurofxref-hist:update:
+    desc: |
+      Update eurofxref-hist.csv with the latest from ecb.europa.eu
+    cmds:
+      - mkdir -p {{.DIST_DIR}}
+      - curl {{.CSV_URL}} -o {{.ZIP_FILE}}
+      - unzip {{.ZIP_FILE}}
+      - mv {{.CSV_FILE}} {{.PACKAGE}}
+      - cmd: git commit {{.PACKAGE}}/{{.CSV_FILE}} -m "update {{.CSV_FILE}}"
+        ignore_error: true
+    vars:
+      CSV_URL: "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist.zip"
+      ZIP_FILE: "{{.DIST_DIR}}/eurofxref-hist.zip"
+      CSV_FILE: "eurofxref-hist.csv"
+
