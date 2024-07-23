@@ -53,7 +53,7 @@ The plugins can work with up-to 4 inputs:
 
 1. Input: The values which you want to convert.
 1. Input: The currency code of your values. If this is not `EUR`,
-    the plugin will first convert your value to EUR.
+    the plugin will first convert your value to `EUR`.
 1. Input: The date from when you want to use the exchange rate.
 1. Input: The target currency code.
 
