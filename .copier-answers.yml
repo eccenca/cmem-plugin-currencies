@@ -3,8 +3,8 @@ _commit: v6.3.1
 _src_path: gh:eccenca/cmem-plugin-template
 author_mail: annikabessing@yahoo.de
 author_name: Annika Bessing
-github_page: ''
+github_page: https://github.com/eccenca/cmem-plugin-currencies
 project_description: Convert prices between currencies.
 project_slug: currencies
-pypi: false
+pypi: true
 
