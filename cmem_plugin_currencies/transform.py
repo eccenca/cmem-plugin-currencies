@@ -36,7 +36,39 @@ def get_current_date() -> str:
     plugin_id="cmem_plugin_currencies-transform",
     description="Converts currencies values with current and historical exchange rates",
     documentation="""
-This converter plugin allows you to convert currencies from one currency to another.
+This transform plugin allows you to convert currencies from one currency to another.
+It uses the Euro foreign exchange reference rates from the
+[European Central Bank](https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html)
+to first convert a currency value to EUR (if needed) and then to another currency.
+
+The plugin contains a data dump which starts with data from 1999-01-04
+(and ends the day before it was downloaded) see the
+[change log](https://github.com/eccenca/cmem-plugin-currencies/blob/main/CHANGELOG.md)
+for more details. It will use the [frankfurter.app](https://www.frankfurter.app/docs/)
+API to receive rates from dates which are not part of the data dump.
+This API will throw an error for future days and returns data from the last trading
+day for dates where it has no data.
+
+The plugins can work with up-to 4 inputs:
+
+1. Input: The values which you want to convert.
+1. Input: The currency code of your values. If this is not `EUR`,
+    the plugin will first convert your value to EUR.
+1. Input: The date from when you want to use the exchange rate.
+1. Input: The target currency code.
+
+For the inputs 2-4, you can define static options as well.
+In addition to that, there is a debug switch which outputs more background data than
+just the plain values.
+
+Here is an example of the plugin in action:
+![cmem-plugin-currencies Example](https://raw.githubusercontent.com/eccenca/cmem-plugin-currencies/main/README.png)
+
+The
+[following currency codes](https://github.com/eccenca/cmem-plugin-currencies/blob/cf2ee5332ad5243da8c70ade1ed8f4612f48ba33/cmem_plugin_currencies/eurofxref-hist.csv#L1)
+can be used with the plugin.
+Please be aware that not all of the rates are available for all dates
+(e.g. after 2022-03-01 there is no RUB rate available anymore).
 """,
     parameters=[
         PluginParameter(
