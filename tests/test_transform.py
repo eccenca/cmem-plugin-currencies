@@ -2,11 +2,11 @@
 
 import pytest
 
-from cmem_plugin_currencies.currencies import (
+from cmem_plugin_currencies.exceptions import InvalidDateError, WrongCurrencyCodeError
+from cmem_plugin_currencies.transform import (
     CurrenciesConverter,
     get_current_date,
 )
-from cmem_plugin_currencies.exceptions import InvalidDateError, WrongCurrencyCodeError
 
 
 def test_init() -> None:
@@ -40,15 +40,24 @@ def test_rubel() -> None:
 
 def test_multi_inputs() -> None:
     """Test multiple inputs"""
-    plugin = CurrenciesConverter(from_currency="USD", to_currency="EUR", date="2024-07-12")
+    plugin = CurrenciesConverter()
     inputs = [
         ["1", "1", "1", "1"],
         ["EUR", "EUR", "EUR", "EUR"],
-        ["EUR", "EUR", "EUR", "EUR"],
         ["2024-04-01", "2024-05-01", "2024-06-01", "2024-07-01"],
+        ["EUR", "EUR", "EUR", "EUR"],
     ]
     transformed = plugin.transform(inputs=inputs)
     assert transformed == ["1.0", "1.0", "1.0", "1.0"]
+
+    inputs = [
+        ["1", "1", "1", "1"],
+        ["EUR", "EUR", "EUR", "EUR"],
+        ["2024-04-01", "2024-05-01", "2024-06-01", "2024-07-01"],
+        ["USD", "CZK", "DKK", "GBP"],
+    ]
+    transformed = plugin.transform(inputs=inputs)
+    assert transformed == ["1.0811", "25.14", "7.4588", "0.8479"]
 
 
 def test_get_current_date() -> None:
@@ -77,6 +86,13 @@ def test_date_validated() -> None:
         CurrenciesConverter.date_validated("9999-01-03")
 
 
+def test_get_rate() -> None:
+    """Test get_rate function"""
+    plugin = CurrenciesConverter()
+    rate = plugin.get_rate("USD", get_current_date())
+    assert rate >= 0
+
+
 def test_wrong_date() -> None:
     """Test wrong dates"""
     CurrenciesConverter(date="2024-01-01")
@@ -90,6 +106,8 @@ def test_wrong_date() -> None:
 
 def test_wrong_currency() -> None:
     """Test wrong currencies"""
+    with pytest.raises(WrongCurrencyCodeError):
+        CurrenciesConverter(date="2024-07-22", from_currency="TTT").transform(inputs=[["1"]])
     with pytest.raises(WrongCurrencyCodeError):
         CurrenciesConverter(date="2024-01-01", from_currency="WRONG_FROM").transform(inputs=[["1"]])
     with pytest.raises(WrongCurrencyCodeError):

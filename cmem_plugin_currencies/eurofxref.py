@@ -5,7 +5,6 @@ https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchang
 
 import contextlib
 import csv
-from functools import lru_cache
 from http.client import NOT_FOUND
 from pathlib import Path
 
@@ -18,7 +17,6 @@ MESSAGE_WRONG_DATE = "Date is not valid. Please use this format: YYYY-MM-DD"
 MESSAGE_NO_DATA_FOR_DATE = "No data available for this date."
 
 
-@lru_cache
 def get_rates_from_dump() -> dict[str, dict[str, float]]:
     """Get historic EUR rates.
 
@@ -44,7 +42,6 @@ def get_rates_from_dump() -> dict[str, dict[str, float]]:
     return rates
 
 
-@lru_cache
 def get_rates_from_api(date: str) -> dict[str, float]:
     """Get EUR rates from the API for a given date.
 
