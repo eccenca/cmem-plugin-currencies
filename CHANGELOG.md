@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [0.8.2] 2024-07-25
 
+### Changed
+
+- data dump available from 1999-01-04 to 2024-07-25
+
 ### Fixed
 
 - do not convert anything in case of same from and to currencies
