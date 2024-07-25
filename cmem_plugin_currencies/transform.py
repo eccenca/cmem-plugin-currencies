@@ -48,6 +48,8 @@ for more details. It will use the [frankfurter.app](https://www.frankfurter.app/
 API to receive rates from dates which are not part of the data dump.
 This API will throw an error for future days and returns data from the last trading
 day for dates where it has no data.
+The API reference rates are usually updated at around 16:00 CET every working day
+(so you get different rates before and after 16:00 CET in case you ask for TODAYs rates).
 
 The plugins can work with up-to 4 inputs:
 

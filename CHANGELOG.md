@@ -10,6 +10,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 - do not convert anything in case of same from and to currencies
 
+### Added
+
+- more documentation
 
 
 ## [0.8.1] 2024-07-23
