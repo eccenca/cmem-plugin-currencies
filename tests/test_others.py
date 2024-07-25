@@ -1,4 +1,5 @@
 """additional tests"""
+
 from cmem_plugin_currencies.exceptions import WrongCurrencyCodeError
 
 
