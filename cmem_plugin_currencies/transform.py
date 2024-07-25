@@ -169,18 +169,26 @@ class CurrenciesConverter(TransformPlugin):
 
     def transform_value(self, value: float, from_currency: str, to_currency: str, date: str) -> str:
         """Convert value from one currency to another"""
-        # convert to base currency (EUR) except if coming from EUR already
-        value_in_eur = (
-            value / self.get_rate(currency=from_currency, date=date)
-            if from_currency != "EUR"
-            else value
-        )
-        # convert to target currency except if target currency is EUR
-        value_converted = (
-            value_in_eur * self.get_rate(currency=to_currency, date=date)
-            if to_currency != "EUR"
-            else value_in_eur
-        )
+        from_currency = from_currency.upper()
+        to_currency = to_currency.upper()
+
+        if from_currency == to_currency:
+            # do not convert anything if we talk about the same currency
+            value_converted = value
+        else:
+            # convert to base currency (EUR) except if coming from EUR already
+            value_in_eur = (
+                value / self.get_rate(currency=from_currency, date=date)
+                if from_currency != "EUR"
+                else value
+            )
+            # convert to target currency except if target currency is EUR
+            value_converted = (
+                value_in_eur * self.get_rate(currency=to_currency, date=date)
+                if to_currency != "EUR"
+                else value_in_eur
+            )
+
         if self.debug:
             return f"{value_converted} - {value} {from_currency} in {to_currency} on {date}"
         return str(value_converted)
