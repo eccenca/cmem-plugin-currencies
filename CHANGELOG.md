@@ -1,8 +1,16 @@
+<!-- markdownlint-disable MD012 MD013 MD024 MD033 -->
 # Change Log
 
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](https://semver.org/)
+
+## [0.9.0] 2025-05-16
+
+### Changed
+
+- data dump available from 1999-01-04 to 2025-05-16
+
 
 ## [0.8.2] 2024-07-25
 

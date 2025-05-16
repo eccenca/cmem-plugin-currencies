@@ -1,1 +1,1 @@
-"""currencies - main package"""
+"""cmem-plugin-currencies"""
