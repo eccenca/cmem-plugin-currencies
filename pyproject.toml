@@ -36,6 +36,7 @@ pytest-html = "^4.1.1"
 pytest-memray = { version = "^1.8.0",  markers = "platform_system != 'Windows'" }
 ruff = "^0.13.3"
 safety = "^1.10.3"
+pip-audit = "^2.9.0"
 types-requests = "^2.31.0.20240406"
 
 [build-system]
