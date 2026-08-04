@@ -5,12 +5,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](https://semver.org/)
 
-## [Unreleased]
+## [0.11.0] 2026-08-04
+
+### Changed
+
+- Update template
+
+
+## [0.10.0] 2025-10-20
 
 ### Changed
 
 - Updated template
 - ensure python 3.13 compatability
+
 
 ## [0.9.0] 2025-05-16
 
