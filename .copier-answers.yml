@@ -1,8 +1,8 @@
 # Changes here will be overwritten by Copier
-_commit: v7.3.0-21-gd03545f
+_commit: v8.5.0-3-g60fcc85
 _src_path: gh:eccenca/cmem-plugin-template
-author_mail: annikabessing@yahoo.de
-author_name: Annika Bessing
+author_mail: cmempy-developer@eccenca.com
+author_name: eccenca GmbH
 github_page: https://github.com/eccenca/cmem-plugin-currencies
 project_description: Convert prices between currencies.
 project_slug: currencies

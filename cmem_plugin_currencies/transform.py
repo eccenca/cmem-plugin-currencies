@@ -195,17 +195,17 @@ class CurrenciesConverter(TransformPlugin):
             return f"{value_converted} - {value} {from_currency} in {to_currency} on {date}"
         return str(value_converted)
 
-    def yield_default_from_currency(self) -> Generator[str, None, None]:
+    def yield_default_from_currency(self) -> Generator[str]:
         """Provide the default FROM currency code"""
         while True:
             yield self.from_currency
 
-    def yield_default_to_currency(self) -> Generator[str, None, None]:
+    def yield_default_to_currency(self) -> Generator[str]:
         """Provide the default TO currency code"""
         while True:
             yield self.to_currency
 
-    def yield_default_date(self) -> Generator[str, None, None]:
+    def yield_default_date(self) -> Generator[str]:
         """Provide the default date"""
         while True:
             yield self.date
